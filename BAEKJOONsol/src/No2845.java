@@ -27,6 +27,8 @@ public class No2845 {
 		for(int i = 0; i < nl2.length; i++) {
 			System.out.print(Integer.parseInt(nl2[i]) - num +  " ");
 		}
+		
+		sc.close();
 	}
 
 }
