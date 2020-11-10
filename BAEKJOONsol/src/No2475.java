@@ -21,6 +21,8 @@ public class No2475 {
 		result = (int)(a+b+c+d+e)%10; 
 		System.out.print(result);
 		
+		sc.close();
+		
 	}
 	
 }
