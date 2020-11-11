@@ -23,6 +23,8 @@ public class No1010 {
 			}
 			result = num / den;
 			System.out.println(result);
+			
+			sc.close();
 		}
 	}
 }
