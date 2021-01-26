@@ -1,85 +1,59 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
-
-//알파벳 소문자로 이루어진 N개의 단어가 들어오면 아래와 같은 조건에 따라 정렬하는 프로그램을 작성하시오.
-
-//길이가 짧은 것부터
-//길이가 같으면 사전 순으로
-
-
-public class No1181 {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+import java.util.*;
+public class No1181{
+	public static void main(String[] args){
 		Scanner sc = new Scanner(System.in);
-
-		int num = sc.nextInt();
-
-		String[] Name = new String[num];
-		String[] Name2 = new String[num];
-		for(int i = 0; i < num; i++) {
-			Name[i] = sc.next();
-			for(int n = 0; n < i; n++) {
-				if(Name[n].equals(Name[i])) {
-					System.out.print("SIBAL");
-					System.arraycopy(Name, 0, Name2, 0, i);
-				}
+		ArrayList<String> list = new ArrayList<String>();
+		
+		ArrayList<String> noolist = new ArrayList<String>();
+		
+		int count = sc.nextInt();
+		for(int i = 0; i < count; i++){
+			list.add(sc.next());
+		}
+		
+		Comparator<String> c = new Comparator<String>(){
+			public int compare(String s1, String s2){
+				return Integer.compare(s1.length(), s2.length());
+			}
+		};
+		
+		Collections.sort(list, c);
+		//길이 정렬
+		
+		for(int i = 0; i < list.size(); i++){
+			if(!noolist.contains(list.get(i))){
+				noolist.add(list.get(i));
 			}
 		}
-		System.out.print(Name2.length);
-		ArrayList<Num> list = new ArrayList<Num>();
-
-		for(int i = 0; i < num; i++) {
-			Num A = new Num(Name[i].length(), i);
-			list.add(A);
-		}
-		Collections.sort(list);
-		for(int i = 0; i < num; i++) {
-		}
+		// 중복 제거
 		
-		String[] Name1 = new String[num];
-		for(int i = 0; i < num; i++) {
-			Name1[i] = Name[list.get(i).num];
-		}
+		String[] array =  noolist.toArray(new String[noolist.size()]);
 		
-		for(int i = 0; i < num - 1; i++) {
-			if(Name1[i].length() == Name1[i+1].length()) {
-				String tmp;
-				if(Name1[i].compareTo(Name1[i+1]) >= 1) {
-
-					tmp = Name1[i];
-					Name1[i] = Name1[i+1];
-					Name1[i+1] = tmp;
-				}
-				
+		ArrayList<Integer> setcount = new ArrayList<Integer>();
+		
+		setcount.add(0);
+		
+		for(int i = 1; i < array.length; i++){
+			if(array[i-1].length() != array[i].length()){
+				setcount.add(i);
 			}
 		}
-		for(int i = 0; i < num; i++) {
-			System.out.println(Name1[i]);
-		}
 		
-
-}
-
-public static class Num implements Comparable<Num>{
-	public
-	int length;
-	int num;
-	Num(int a, int b){
-		length = a;
-		num = b;
-	}
-	public int compareTo(Num A) {
-		if(length > A.length) {
-			return 1;
-		}else if(length < A.length) {
-			return -1;
-		}else {
-			return 0;
+		
+		for(int i = 0; i < setcount.size(); i++){
+			
+			if(i != setcount.size() -1){
+				if(setcount.get(i+1) - setcount.get(i) != 1){// 같은 길이가 없으면 무시
+			
+					Arrays.sort(array, 	setcount.get(i), setcount.get(i) + 	setcount.get(i+1) - setcount.get(i));
+					}
+			}else{
+				Arrays.sort(array, setcount.get(i), array.length);
+			}
 		}
+		for(int i = 0; i < array.length; i++){
+			System.out.println(array[i]);
+		}
+		// 같은 길이 단어 부분 정렬
 	}
-}
 }
